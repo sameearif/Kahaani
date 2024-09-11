@@ -1,0 +1,14 @@
+torch
+transformers
+sentencepiece
+accelerate
+peft
+diffusers
+openai
+fastapi[all]
+uvicorn
+moviepy
+soundfile
+imageio
+imageio-ffmpeg
+pillow
