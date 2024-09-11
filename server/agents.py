@@ -75,16 +75,16 @@ class Composer:
     
 class Musician:
     def __init__(self, model, device):
-        self.model = MusicgenForConditionalGeneration.from_pretrained(model).to("cuda")
+        self.model = MusicgenForConditionalGeneration.from_pretrained(model).to(device)
         self.processor = AutoProcessor.from_pretrained(model)
-        self.device = "cuda"
+        self.device = device
     async def forward(self, x):
         inputs = self.processor(
             text=[x],
             padding=True,
             return_tensors="pt"
         )
-        audio = self.model.generate(**inputs.to("cuda"), max_new_tokens=308)
+        audio = self.model.generate(**inputs.to(self.device), max_new_tokens=308)
         audio = audio.cpu().numpy()[0][0]
         audio = audio[:int(6 * self.model.config.audio_encoder.sampling_rate)]
         filename = time.strftime("%Y%m%d-%H%M%S") + ".mp3"
